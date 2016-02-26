@@ -9,27 +9,29 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 /**
  * Created by oilopez on 25/02/2016.
  */
 public class MoviesAdapter extends ArrayAdapter<Movie> {
 
-    public MoviesAdapter(Context context, Movie[] movies) {
-        super(context, 0, movies);
+    Context context;
+
+    public MoviesAdapter(Context context, ArrayList<Movie> movies) {
+        super(context, R.layout.item_movie, movies);
+        this.context = context;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Movie movie = getItem(position);
-
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_fragment_top_movies, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_movie, parent, false);
         }
 
-        ImageView imageview = (ImageView) convertView.findViewById(R.id.imageView);
-
-        Picasso.with(getContext()).load(movie.getImage()).into(imageview);
-
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
+        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/" + movie.getPoster_path()).into(imageView);
         return convertView;
     }
 }
